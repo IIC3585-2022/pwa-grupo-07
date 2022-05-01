@@ -1,0 +1,27 @@
+{
+  "name": "Vuewer App",
+  "short_name": "Vuewer",
+  "start_url": ".",
+  "background_color": "#EFEFEF",
+  "theme_color": "#5A4AE3",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "src/logos/Vuewer-logos/Vuewer-logos_transparent.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "src/logos/Vuewer-logos/Vuewer-logos_black.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "src/logos/Vuewer-logos/Vuewer-logos_white.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
