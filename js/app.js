@@ -1,3 +1,7 @@
+const button = document.getElementById("openCamera");
+button.onclick = () => {
+  location.hash = "home";
+};
 const container = document.querySelector(".container")
 const coffees = [
   { name: "Perspiciatis", image: "images/coffee1.jpg" },

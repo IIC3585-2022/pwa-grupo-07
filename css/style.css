@@ -33,6 +33,14 @@ h1 {
   margin-bottom: 0.5rem;
 }
 
+button {
+  text-decoration: none;
+  background: #db4938;
+  color: #fff;
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+}
+
 .container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
