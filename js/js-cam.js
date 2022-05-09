@@ -43,12 +43,12 @@ var cam = {
       // (B2-4) SERVICE WORKER
       if (pass) {
         navigator.serviceWorker
-          .register("js-cam-sw.js")
+          .register("serviceWorker.js")
           .then((reg) => {
             cam.init(1);
           })
           .catch((err) => {
-            cam.err("Service worker init error - " + evt.message);
+            cam.err("Service worker init error - " + installEvent.message);
             console.error(err);
           });
       }
