@@ -6,26 +6,35 @@ button.onclick = () => {
 
 const container = document.querySelector(".container");
 const coffees = [
-  { name: "Perspiciatis", image: "images/coffee1.jpg" },
-  { name: "Voluptatem", image: "images/coffee2.jpg" },
-  { name: "Explicabo", image: "images/coffee3.jpg" },
-  { name: "Rchitecto", image: "images/coffee4.jpg" },
-  { name: " Beatae", image: "images/coffee5.jpg" },
-  { name: " Vitae", image: "images/coffee6.jpg" },
-  { name: "Inventore", image: "images/coffee7.jpg" },
-  { name: "Veritatis", image: "images/coffee8.jpg" },
-  { name: "Accusantium", image: "images/coffee9.jpg" },
+  {
+    name: "Perspiciatis",
+    image: "images/coffee1.jpg",
+    caption: "Lorem Ipsum ",
+  },
+  { name: "Voluptatem", image: "images/coffee2.jpg", caption: "Lorem Ipsum 2" },
+  { name: "Explicabo", image: "images/coffee3.jpg", caption: "Lorem Ipsum 3" },
+  { name: "Rchitecto", image: "images/coffee4.jpg", caption: "Lorem Ipsum 4" },
+  { name: " Beatae", image: "images/coffee5.jpg", caption: "Lorem Ipsum 5" },
+  { name: " Vitae", image: "images/coffee6.jpg", caption: "Lorem Ipsum 6" },
+  { name: "Inventore", image: "images/coffee7.jpg", caption: "Lorem Ipsum 7" },
+  { name: "Veritatis", image: "images/coffee8.jpg", caption: "Lorem Ipsum 8" },
+  {
+    name: "Accusantium",
+    image: "images/coffee9.jpg",
+    caption: "Lorem Ipsum 9",
+  },
 ];
 
 const showCoffees = () => {
   let output = "";
   coffees.forEach(
-    ({ name, image }) =>
+    ({ name, image, caption }) =>
       (output += `
                 <div class="card">
                   <img class="card--avatar" src=${image} />
-                  <h1 class="card--title">${name}</h1>
-                  <a class="card--link" href="#">Taste</a>
+                  <h1 class="card--title">${name}</h1>        
+                  <h2 class="card--caption">${caption}</h2>    
+                  <a class="card--link" href="#">Edit caption</a>
                 </div>
                 `)
   );
