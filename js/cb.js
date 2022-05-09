@@ -8,11 +8,11 @@ var cb = {
     // (B) LOAD PAGE
     load : () => {
       // (B1) PAGE TO LOAD
-      let page = location.hash=="" ? "home" : location.hash.substr(1);
+      let page = location.hash=="galery" ? "home" : location.hash.substr(1);
   
       // (B2) UNDEFINED PAGE
       if (cb.pages[page]==undefined) {
-        alert(`ERROR - ${page} is not defined!`);
+        alert(`BIENVENIDO`);
       }
   
       // (B3) AJAX FETCH
