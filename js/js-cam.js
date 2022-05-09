@@ -1,6 +1,6 @@
 var cam = {
   // (A) HELPER FUNCTION TO GENERATE ERROR MESSAGE
-  err : (msg) => {
+  err: (msg) => {
     let row = document.createElement("div");
     row.className = "error";
     row.innerHTML = msg;
@@ -8,13 +8,15 @@ var cam = {
   },
 
   // (B) INIT APP
-  cPics : "MyPics", // cache to store pictures
-  ready : 0, // number of components that are ready
-  init : (ready) => {
+  cPics: "MyPics", // cache to store pictures
+  ready: 0, // number of components that are ready
+  init: (ready) => {
     // (B1) ALL CHECKS & COMPONENTS GOOD TO GO?
-    if (ready==1) {
+    if (ready == 1) {
       cam.ready++;
-      if (cam.ready==3) { cb.load(); }
+      if (cam.ready == 3) {
+        cb.load();
+      }
     }
 
     // (B2) REQUIREMENT CHECKS & SETUP
@@ -40,57 +42,67 @@ var cam = {
 
       // (B2-4) SERVICE WORKER
       if (pass) {
-        navigator.serviceWorker.register("js-cam-sw.js")
-        .then((reg) => { cam.init(1); })
-        .catch((err) => {
-          cam.err("Service worker init error - " + evt.message);
-          console.error(err);
-        });
+        navigator.serviceWorker
+          .register("js-cam-sw.js")
+          .then((reg) => {
+            cam.init(1);
+          })
+          .catch((err) => {
+            cam.err("Service worker init error - " + evt.message);
+            console.error(err);
+          });
       }
 
       // (B2-5) CACHE STORAGE FOR PICTURES
       if (pass) {
-        caches.open(cam.cPics)
-        .then((cache) => { cam.init(1); })
-        .catch((err) => {
-          cam.err("Failed to create cache storage.");
-          console.error(err)
-        });
+        caches
+          .open(cam.cPics)
+          .then((cache) => {
+            cam.init(1);
+          })
+          .catch((err) => {
+            cam.err("Failed to create cache storage.");
+            console.error(err);
+          });
       }
 
       // (B2-6) GET CAMERA PERMISSION
       if (pass) {
-        navigator.mediaDevices.getUserMedia({ video: true })
-        .then((stream) => { cam.init(1); })
-        .catch((err) => {
-          cam.err("Please attach a webcam and give app permission.");
-          console.error(err);
-        });
+        navigator.mediaDevices
+          .getUserMedia({ video: true })
+          .then((stream) => {
+            cam.init(1);
+          })
+          .catch((err) => {
+            cam.err("Please attach a webcam and give app permission.");
+            console.error(err);
+          });
       }
     }
   },
 
   // (C) START CAMERA LIVE FEED & ENABLE CONTROLS
-  start : () => {
-    navigator.mediaDevices.getUserMedia({ video: true })
-    .then((stream) => {
-      cam.snapfeed = document.getElementById("cam-feed");
-      cam.snapflash = document.getElementById("cam-flash");
-      cam.snapfeed .srcObject = stream;
-      document.getElementById("cam-pics").disabled = false;
-      document.getElementById("cam-snap").disabled = false;
-    })
-    .catch((err) => {
-      alert("OPPS. Error while initializing camera.")
-      console.error(err);
-    });
+  start: () => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((stream) => {
+        cam.snapfeed = document.getElementById("cam-feed");
+        cam.snapflash = document.getElementById("cam-flash");
+        cam.snapfeed.srcObject = stream;
+        document.getElementById("cam-pics").disabled = false;
+        document.getElementById("cam-snap").disabled = false;
+      })
+      .catch((err) => {
+        alert("OPPS. Error while initializing camera.");
+        console.error(err);
+      });
   },
 
   // (D) SNAP!
-  snapfeed : null, // html video
-  snapflash : null, // html flash
-  snaptimer : null, // flash timer
-  snap : () => {
+  snapfeed: null, // html video
+  snapflash: null, // html flash
+  snaptimer: null, // flash timer
+  snap: () => {
     // (D1) FEEDBACK
     clearTimeout(cam.snaptimer);
     cam.snapflash.classList.add("show");
@@ -101,9 +113,9 @@ var cam = {
 
     // (D2) CAPTURE VIDEO FRAME TO CANVAS
     let canvas = document.createElement("canvas"),
-        ctx = canvas.getContext("2d"),
-        vWidth = cam.snapfeed.videoWidth,
-        vHeight = cam.snapfeed.videoHeight;
+      ctx = canvas.getContext("2d"),
+      vWidth = cam.snapfeed.videoWidth,
+      vHeight = cam.snapfeed.videoHeight;
     canvas.width = vWidth;
     canvas.height = vHeight;
     ctx.drawImage(cam.snapfeed, 0, 0, vWidth, vHeight);
@@ -116,28 +128,32 @@ var cam = {
           // GET NEXT RUNNING NUMBER
           let i = 1;
           while (true) {
-            let check = await cache.match("pic-"+i+".png");
-            if (check) { i++; continue; }
-            else { break; }
+            let check = await cache.match("pic-" + i + ".png");
+            if (check) {
+              i++;
+              continue;
+            } else {
+              break;
+            }
           }
 
           // SAVE IMAGE INTO CACHE
-          cache.put("pic-"+i+".png", res);
+          cache.put("pic-" + i + ".png", res);
           URL.revokeObjectURL(url);
         });
       });
     });
-  }
+  },
 };
 
 // FIN CAM
 
 var gallery = {
   // (A) LIST GALLERY
-  list : () => {
+  list: () => {
     // (A1) GET TEMPLATE + WRAPPER
     let wrap = document.getElementById("gallery-pics"),
-        template = document.getElementById("gallery-template").content;
+      template = document.getElementById("gallery-template").content;
 
     // (A2) DRAW IMAGES
     wrap.innerHTML = "";
@@ -146,8 +162,13 @@ var gallery = {
         keys.forEach((req) => {
           let item = template.cloneNode(true);
           item.querySelector(".img").src = req.url;
-          item.querySelector(".del").onclick = () => { gallery.del(req.url); };
-          item.querySelector(".get").onclick = () => { gallery.get(req.url); };
+
+          item.querySelector(".del").onclick = () => {
+            gallery.del(req.url);
+          };
+          item.querySelector(".get").onclick = () => {
+            gallery.get(req.url);
+          };
           wrap.appendChild(item);
         });
       });
@@ -155,28 +176,33 @@ var gallery = {
   },
 
   // (B) DELETE AN IMAGE
-  del : (pic) => { if (confirm("Delete image?")) {
-    caches.open(cam.cPics).then((cache) => {
-      cache.delete(pic).then((res) => {
-        gallery.list();
-        cb.info("Image deleted");
+  del: (pic) => {
+    if (confirm("Delete image?")) {
+      caches.open(cam.cPics).then((cache) => {
+        cache.delete(pic).then((res) => {
+          gallery.list();
+          cb.info("Image deleted");
+        });
       });
-    });
-  }},
+    }
+  },
 
   // (C) DOWNLOAD AN IMAGE
-  get : (pic) => {
-    caches.match(pic)
-    .then((res) => { return res.blob(); })
-    .then((imgBlob) => {
-      let a = document.createElement("a"),
-      url = URL.createObjectURL(imgBlob);
-      a.href = url;
-      a.download = "pic.png";
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    });
-  }
+  get: (pic) => {
+    caches
+      .match(pic)
+      .then((res) => {
+        return res.blob();
+      })
+      .then((imgBlob) => {
+        let a = document.createElement("a"),
+          url = URL.createObjectURL(imgBlob);
+        a.href = url;
+        a.download = "pic.png";
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      });
+  },
 };
 window.addEventListener("load", cam.init);

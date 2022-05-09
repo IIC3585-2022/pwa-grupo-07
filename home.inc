@@ -4,11 +4,16 @@
 
   <!-- (B) CAMERA CONTROLS -->
   <div id="cam-btn">
-    <button id="cam-pics" class="mi" onclick="window.location.hash='gallery'" disabled>
-      collections
+    <button
+      id="cam-pics"
+      class="mi"
+      onclick="window.location.hash='gallery'"
+      disabled
+    >
+      Gallery
     </button>
     <button id="cam-snap" class="mi" onclick="cam.snap()" disabled>
-      photo_camera
+      Take Photo
     </button>
   </div>
 </div>
